@@ -1,6 +1,7 @@
 package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
@@ -9,12 +10,18 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-// Указываем, что класс PostService - является бином и его
-// нужно добавить в контекст приложения
 @Service
 public class PostService {
+
     private final Map<Long, Post> posts = new HashMap<>();
+
+    public Optional<Post> findById(@PathVariable int postId) {
+        return posts.values().stream()
+                .filter(x -> x.getId() == postId)
+                .findFirst();
+    }
 
     public Collection<Post> findAll() {
         return posts.values();
