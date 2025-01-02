@@ -1,11 +1,11 @@
 package ru.yandex.practicum.catsgram.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
@@ -14,6 +14,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/posts/{postId}")
+    public Optional<User> findById(@PathVariable int userId) {
+        return userService.findById(userId);
     }
 
     @GetMapping
