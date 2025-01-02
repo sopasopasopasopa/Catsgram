@@ -16,9 +16,9 @@ public class PostService {
 
     private final Map<Long, Post> posts = new HashMap<>();
 
-    public Optional<Post> findById(@PathVariable int postId) {
+    public Optional<Post> findById(@PathVariable Long postId) {
         return posts.values().stream()
-                .filter(x -> x.getId() == postId)
+                .filter(x -> x.getId().equals(postId))
                 .findFirst();
     }
 

@@ -22,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public Optional<Post> findById(@PathVariable int postId) {
+    public Optional<Post> findById(@PathVariable Long postId) {
         return postService.findById(postId);
     }
 
