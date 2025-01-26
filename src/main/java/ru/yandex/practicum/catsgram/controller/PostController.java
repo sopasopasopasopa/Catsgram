@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
+import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
@@ -40,7 +41,13 @@ public class PostController {
             @RequestParam(required = false, defaultValue = "asc") String sort) {
 
         if (size <= 0) {
-            throw new ConditionsNotMetException("Параметр size должен быть больше нуля");
+            throw new ParameterNotValidException("size", "Некорректный размер выборки. Размер должен быть больше нуля");
+        }
+        if (from < 0) {
+            throw new ParameterNotValidException("from", "Некорректный параметр. Значение не может быть меньше нуля");
+        }
+        if (!sort.equalsIgnoreCase("asc") && !sort.equalsIgnoreCase("desc")) {
+            throw new ParameterNotValidException("sort", "Некорректное значение сортировки. Должно быть 'asc' или 'desc'");
         }
 
         return postService.findAll(from, size, sort);
